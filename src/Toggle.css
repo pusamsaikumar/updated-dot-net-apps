@@ -1,0 +1,56 @@
+
+body.windscreen.fixed-left-void {
+    width: 1519.2px; /* Styles when in void state */
+}
+
+body.windscreen.fixed-left {
+    width: 1519.2px; /* Styles when in fixed left state */
+}
+
+/* Additional styles for div#wrapper if needed */
+div#wrapper.force {
+    width: 1519.2px;
+}
+
+div#wrapper.force.enlarged-forced {
+    width: 1519.2px;
+}
+
+.sidebar-menu-ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Default state */
+#wrapper {
+    width: 100%;
+    transition: width 0.3s ease;
+  }
+  
+  #barIcon {
+    position: absolute;
+    left: 0;
+    transition: left 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Enlarged state */
+  #wrapper.enlarged {
+    width: calc(100% + 240px); /* Adjust as needed */
+  }
+  
+  #wrapper.enlarged #barIcon {
+    left: 240px; /* Move the icon 240px to the left */
+  }
+  
+
+  @media (min-width: 768px) {
+    .col-sm-12 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        float: left;
+    }
+}

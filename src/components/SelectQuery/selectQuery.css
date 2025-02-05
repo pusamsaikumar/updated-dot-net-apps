@@ -1,0 +1,15 @@
+.container{
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+   
+}
+ .gridBtn{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: end;
+    margin-bottom: 2px;
+ }

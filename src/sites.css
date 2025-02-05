@@ -1,0 +1,98 @@
+/* toggle - button */
+/* App.css */
+.page-content {
+    position: relative;
+    left: 100px; /* Initial position */
+    transition: left 0.5s ease;
+  }
+  
+
+  
+  .toggle-btn {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .divcontainer {
+    display: flex;
+    height: 100vh;
+    margin-top: 50px;
+  }
+  
+ 
+      /* Main menu hover */
+      .content-page {
+        display: flex; 
+        height: 100vh; 
+         
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .content {
+       
+        max-height: 100%; 
+        padding: 10px; 
+      
+        background-color: #f3f3f3;
+        flex: 1; 
+       
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+ .content::-webkit-scrollbar {
+        width: 8px; 
+    } 
+    
+    .content::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    .content::-webkit-scrollbar-thumb {
+        background: #888; 
+        
+    }
+    
+    .content::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }  
+
+
+
+    .file-input-wrapper input[type=file], .file-input-wrapper input[type=file]:focus, .file-input-wrapper input[type=file]:hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      opacity: 0;
+      filter: alpha(opacity = 0);
+      z-index: 99;
+      outline: 0;
+  }
+  
+  .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+      background-color: #98A3A3;
+      border-color: #98A3A3;
+      color: #fff;
+  }
+  .btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open>.dropdown-toggle.btn-default {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+  }
+  .btn:hover, .btn:focus, .btn.focus {
+      color: #333;
+      text-decoration: none;
+  }
+  input[type=file] {
+      display: block;
+  }
+  .btn-default {
+      background-color: #ABB7B7;
+      border-color: #ABB7B7;
+      color: #fff;
+  }
+  .btn{
+    display: block;
+  }

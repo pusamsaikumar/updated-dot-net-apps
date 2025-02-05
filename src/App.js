@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect  } from "react";
+import Header from "./components/Header/Header";
+import ContentPage from "./components/ContentPage"
+import Sidebar from "./components/SideBar/Sidebar";
+import { BrowserRouter,Routes ,Route } from "react-router-dom";
+import SelectQuery from "./components/SelectQuery/SelectQuery";
+import ViewReward from "./components/Reward/ViewReward/ViewReward"; 
+import FindMemberNumberReward from "./components/Reward/FindMemberNumberReward/FindMemberNumberReward";
+import FindShoppers from "./components/Shoppers/FindShoppers";
+import ShopperTransaction from "./components/Shoppers/ShopperTransaction";
+import Layout from "./components/Layout/Layout";
 
-function App() {
+
+
+
+const App = () => {
+  const [isEnlarged, setIsEnlarged] = useState(false);
+
+  // Toggle function to change the state
+  const toggleMenu = () => {
+    setIsEnlarged(!isEnlarged);
+  };
+  
+  const [retailerName, setRetailerName] = useState("");
+  const handleRetailerName =(e)=> {
+   setRetailerName(e.target.value);
+  }
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <Layout />
+   
+    {/* <BrowserRouter>
+    <div id="wrapper" className={isEnlarged ? "enlarged" : "force"}>
+      <Header 
+      toggleMenu={toggleMenu} 
+      isEnlarged = {isEnlarged} 
+       handleRetailerName = {handleRetailerName}
+        retailerName={retailerName}
+        setRetailerName = {setRetailerName}
+        />
+  
     </div>
+    <Routes>
+      <Route path="/support/cleintaccess" element={<SelectQuery clientName={retailerName} />} />
+      <Route path="/reward/viewreward" element ={<ViewReward clientName={retailerName} />} />
+      <Route path="/reward/findmemberrewards"  element = {<FindMemberNumberReward clientName={retailerName} />} />
+      <Route path="/shoppers/findshoppers" element = {<FindShoppers clientName={retailerName} />} />
+      <Route path="/shoppers/shoppertransaction" element = {<ShopperTransaction clientName={retailerName} />} />
+      
+    </Routes>
+    </BrowserRouter> */}
+    </>
+    
+   
   );
-}
+};
 
 export default App;
+
