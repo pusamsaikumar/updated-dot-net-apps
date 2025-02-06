@@ -1,0 +1,20 @@
+
+        <
+        Switch >
+        <
+        Route exact path = '/'
+        component = { Signin1 }
+        /> <
+        Route path = '/Signin2'
+        component = { Signin2 }
+        />   <
+        Route path = '/Register1'
+        component = { Register1 }
+        />   <
+        Route path = '/Reset15'
+        component = { Reset15 }
+        />      <
+        Route path = '/SandP'
+        component = { SandP }
+        />         < /
+        Switch >

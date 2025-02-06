@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* Make the image fully responsive */
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container carousel-container">
+        <div class="row">
+            <div class="col">
+                <div class="carousel slide" id="carousel-0">
+                    <div class="carousel-inner">
+                        <div class="active carousel-item" data-slide-number="0">
+                            <img src="http://placehold.it/770x300&text=one" />
+                        </div>
+                        <div class="carousel-item" data-slide-number="1">
+                            <img src="http://placehold.it/770x300&text=two" />
+                        </div>
+                        <a class="carousel-control-prev" href="#carousel-0" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-0" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col carousel-text"></div>
+            <div style={{display: "none"}}>
+                <div class="slide-content" data-slide="0">
+                    <h5>Slide 1</h5>
+                </div>
+                <div class="slide-content" data-slide="1">
+                    <h5>Slide 2</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+    <script>
+        $(window).on("load", function() {
+            $('.carousel-container').each(function() {
+                var $carouselContainer = $(this);
+                var $carousel = $carouselContainer.find('.carousel').on('slid.bs.carousel', function() {
+                    var targetSlide = $carousel.find('.active').index();
+                    var targetContent = $carouselContainer.find('.slide-content[data-slide="' + targetSlide + '"]').html();
+                    $carouselContainer.find('.carousel-text').html(targetContent);
+                }).carousel({
+                    interval: false
+                });
+                $carouselContainer.find('.carousel-selector').on('click', function() {
+                    var targetSlide = $(this).data('slide');
+                    $carousel.carousel(targetSlide);
+                });
+                var n = $carouselContainer.find(".slide-content").length;
+                if (n < 2 || $carouselContainer.closest(".modal").length > 0) {
+                    $carousel.trigger('slid.bs.carousel');
+                } else {
+                    $carousel.carousel(n - 1);
+                    $carousel.trigger('slid.bs.carousel');
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
