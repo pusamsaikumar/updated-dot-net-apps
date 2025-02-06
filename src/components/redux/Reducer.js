@@ -419,6 +419,15 @@ export const createBasketCouponReducer = (state,payload) => {
         
     }
 }
+export const  CreateUPCCouponReducer=(state,payload)=> {
+    return {
+        ...state,
+        createUPCCouponData:payload && payload.data && payload.data,
+        createUPCCouponMessage:payload && payload.message && payload.message,
+        createUPCCouponLoading:payload && payload.loading && payload.loading,
+    }
+}
+
 
 
 

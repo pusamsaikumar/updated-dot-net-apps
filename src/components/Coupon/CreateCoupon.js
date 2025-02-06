@@ -5,7 +5,7 @@ import '../../Styles.css';
 import '../../sites.css';
 import '../../Toggle.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateBasketCouponAPI, CreateBasketCouponAPID, getFindShopperByIdApi, GetProductDetailsUPCsAPI } from '../redux/API';
+import { CreateBasketCouponAPI, CreateBasketCouponAPID, CreateUPCCouponAPI, getFindShopperByIdApi, GetProductDetailsUPCsAPI } from '../redux/API';
 import { hasFormSubmit } from '@testing-library/user-event/dist/utils';
 import { Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,7 @@ import moment from 'moment/moment';
 import { getClientStoresAPI, getFindShopperAPI, GetUserClipsAndRedemptionsDatesAPI, getUserRewardCouponsAPI, userHistoryAPI, getUserBasketTransactionAPI, getFindShopperPaginationAPI, getUserGroupsAPI, getUserAvailableGroupsAPI, GetProductCategoriesAPI, GetTopShoppersAPI, DownloadTopShoppersAPI, GetAllshoppersGroupsAPI, GetAdvancedShopperSearchAPI } from '../redux/API';
 import LoaderModal from '../Models/LoaderModal';
 import UploadUPCFile from '../Models/UploadUPCFile';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 
 const CreateCoupon = ({
@@ -35,8 +36,7 @@ const CreateCoupon = ({
 
   // set coupon section slide open
   const [sectionSlideOpen, setSectionSlideOpen] = useState(true);
-  console.log("section ", sectionSlideOpen);
-  console.log("coup", couponSlidOpen)
+ 
 
   // groups,department,stores data:
   const getClientStoresData = useSelector((state) => state.getClientStoresData);
@@ -99,6 +99,8 @@ const CreateCoupon = ({
       "clubIds": "0",
       "groupNames": "",
       "clientStoreIds": "0",
+      couponLimit:1,
+      maxCouponAmount:0,
       productCode: "",
       productName: "",
       productCategoryId: "0",
@@ -112,63 +114,34 @@ const CreateCoupon = ({
   );
 
 
+  useEffect(() => {
+      if(selectCoupon === "Basket Deals") {
+        setValue((prev) => ({...prev,newsCategoryId:"3"}))
+      }
+      if(selectCoupon === "UPC Promotion"){
+        setValue((prev) => ({...prev,newsCategoryId:"5"}))
+      }
+  },[selectCoupon])
 
-  // const [value, setValue] = useState(
-  //   {
 
 
+  //  validateNumners only
+  const validNumbers = (e) => {
+    let reqex = /^[0-9]+$/;
+    if(reqex.test(e.tartget.value)) setValue((prev) => {
+      return {
+        ... prev,
+        ["maxCouponAmount"]:e.target.value
+      }
+    });
+    
+  }
 
-
-  //     "newsID": 0,
-  //     "newsCategoryId": data?.newsCategoryID ||0,
-  //     "title": data?.title || "",
-  //     "details": data?.details || "",
-  //     "imagePath": "",
-  //     "validFromDate": new Date(data?.validFromDate) || "",
-  //     "expiresOn": new Date(data?.expiresOn) || "",
-  //     "sendNotification": data?.sendNotification ||false,
-  //     "customerId":data?.customerID || 0,
-  //     "createUserId":data?.createUserID || 0,
-  //     "updateUserId":data?.updateUserID || 0,
-  //     "puiCode": data?.puiCode || "",
-  //     "productId":data?.productId || 0,
-  //     "amount": data?.amount ||0,
-  //     "discountAmount": data?.discountAmount || 0,
-  //     "isDiscountPercentage": data?.isDiscountPercentage || false,
-  //     "ncrPromotionCode": data?.ncrPromotionCode ||"",
-  //     "isItStoreSpecific":data?.isItStoreSpecific || false,
-  //     "manufacturerCouponId":data?.manufacturerCouponId || "",
-  //     "productQuantity":data?.productQuantity || 0,
-  //     "upSellProductId":data?.upSellProductId || 0,
-  //     "upSellProductQuantity":data?.upSellProductQuantity || 0,
-  //     "isFeatured": data?.isFeatured ||false,
-  //     "deleteFlag": false,
-  //     "isItTargetSpecific":data?.isItTargetSpecific || false,
-  //     "otherDetails": data?.otherDetails || "",
-  //     "isRecurring": data?.isRecurring || false,
-  //     "mfgShutOffDate":data?.mfgShutOffDate || "",
-  //     "isDealOfTheWeek":data?.isDealOftheWeek|| false,
-  //     "departmentId": "0",
-  //     "isMajorDepartment": false,
-  //     "storeId": "0",
-  //     "pageNumber": 0,
-  //     "pdfFileName": "",
-  //     "clubId": 0,
-  //     "userDetailId": 0,
-  //     "clubMemberId": 0,
-  //     "id": 0,
-  //     "storeRouteId": "",
-  //     "clientStoreId": 0,
-  //     "news_Id": "0",
-  //     "recurringStartDate": "",
-  //     "recurringEndDate":"",
-  //     "recurringTypeId": 0,
-  //       "clubIds": "0",
-  //      "groupNames": "",
-  //      "clientStoreIds": "0"
-  //   }
-  // );
-
+  const validateNaNNumbers=(e) => {
+    if(!isNaN(e.target.value)) {
+      setValue(prev => ({...prev,maxCouponAmount:e.target.value}))
+    } 
+  }
 
 
   const dispatch = useDispatch();
@@ -179,7 +152,7 @@ const CreateCoupon = ({
     dispatch(GetAllshoppersGroupsAPI("Veritra RSA", 0, 0))
   }, [dispatch]);
 
-  console.log("d", getAllShopperGroupsData)
+ 
 
   const handleInput = (e, name) => {
     setValue((prev) => {
@@ -455,7 +428,7 @@ const CreateCoupon = ({
       setSelectStores(update?.length > 0 ? update : ["All"])
     }
   }
-  console.log("select", selectStores);
+ 
   useEffect(() => {
     if (selectStores.includes("All")) {
       setValue((prev) => {
@@ -503,6 +476,14 @@ const CreateCoupon = ({
 
 
   console.log("value", value);
+ 
+ const  createBasketCouponData  = useSelector(state => state.createBasketCouponData);
+ const createBasketCouponMessage = useSelector(state => state.createBasketCouponMessage);
+ const createBasketCouponLoading = useSelector(state => state.createBasketCouponLoading);
+ const createUPCCouponData = useSelector(state => state.createUPCCouponData);
+ const createUPCCouponLoading = useSelector(state => state.createUPCCouponLoading);
+ const createUPCCouponMessage = useSelector(state => state.createUPCCouponMessage);
+  
 
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("")
@@ -536,10 +517,20 @@ const CreateCoupon = ({
       return () => clearTimeout(timer);
     }
   }, [successMsg]);
+
+  //  showing notifications Api Status:
+  useEffect(() => {
+    if(createUPCCouponMessage === "Successful") setSuccessMsg("Successfully create upc coupon.")
+    else if(createUPCCouponMessage !== "" && createUPCCouponMessage !== "Successful") setErrorMsg(createUPCCouponMessage)
+  },[createUPCCouponMessage])
+
+   
   // create basket coupon:
   const handleCreateCoupon = (e) => {
     e.preventDefault();
-    dispatch(CreateBasketCouponAPID("Veritra RSA", value))
+    if(selectCoupon == "Basket Deals") dispatch(CreateBasketCouponAPID("Veritra RSA", value));
+    if(selectCoupon == "UPC Promotion") dispatch(CreateUPCCouponAPI("Veritra RSA", value));
+    
   }
 
   const handleNextsteps = (currentStep) => {
@@ -601,7 +592,7 @@ const CreateCoupon = ({
       // Depts
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDeptDropDown(false);
-        console.log("dropdown ref", dropdownRef.current)
+     
       }
 
       //Groups
@@ -757,7 +748,7 @@ const CreateCoupon = ({
     : `Showing ${indexOfFirstItem + 1} to ${indexOfLastItem <= totalEntries ? indexOfLastItem : totalEntries} of ${totalEntries} entries`;
 
 
-  console.log("getproducts", getProductDetailsData);
+
    // sorting data result: for all filtere data:
              const sortData = Array.isArray(filterData) ? filterData.sort((a, b) => {
                  if (sortTerm.key) {
@@ -801,10 +792,15 @@ const CreateCoupon = ({
     let selectedUPc = selectedItem?.length > 1 ?
     selectedItem?.map((each) => each?.productCode).join(",")
     : selectedItem?.length === 1 ? selectedItem[0]?.productCode :"";
+    // let productNames = selectedItem?.length > 1 ?
+    // selectedItem?.map((each) => each?.productName).join(",")
+    // : selectedItem?.length === 1 ? selectedItem[0]?.productName :"";
+    let productNames = selectedItem?.length > 0 ? selectedItem[0]?.productName :"";
     setValue((prev) => {
       return {
         ...prev,
-        ["UPC"]:selectedUPc
+        ["UPC"]:selectedUPc,
+        ["productName"]:productNames
       }
     })
   },[selectedItem]);
@@ -823,11 +819,8 @@ const CreateCoupon = ({
  },[data])
 
 
-   const selectedUPCS= selectedItem?.length > 0 && selectedItem?.map((each) => each.productCode).join(",");
-  console.log("selected",selectedItem);
-  console.log("selectedUPCS",selectedUPCS);
-  console.log("select upload",data);
   
+
   return (
     <>
       <div className='right side-menu'>
@@ -851,6 +844,61 @@ const CreateCoupon = ({
               <span>Create Coupon</span>
             </h1>
           </div>
+            {
+                                                  errorMsg != "" && showNotificationError === true &&
+                                                  // <div style={{top:"-40px",right:"10px",position:"absolute",margin:"5px",zIndex:"1px",height:"52x",zIndex:"1000"}}>
+                      
+                                                  <div style={{ color: "#fff", background: "#FFC052", margin: "5px", padding: "5px", display: "flex", position: "fixed", alignItems: "center", top: "0", right: "0", zIndex: "1000" }}
+                                                      onClick={handleNoficationError}
+                                                  >
+                                                      <FontAwesomeIcon icon={faWarning} style={{ fontSize: "35px" }} />
+                      
+                                                      <span style={{ color: "#fff", background: "#FFC052", fontSize: "15px" }} >
+                      
+                      
+                                                          {errorMsg}
+                                                      </span>
+                                                  </div>
+                      
+                                                  // </div>
+                                              }
+                      
+                                              {
+                                                  successMsg != "" && showNotificationSuccess === true &&
+                                                  // <div style={{top:"-40px",right:"10px",position:"absolute",margin:"5px",zIndex:"1px",height:"52x",zIndex:"1000"}}>
+                      
+                                                  <div
+                                                      style={{
+                                                          color: "#FFFFFF",
+                                                          background: "#FFC052",
+                                                          margin: "5px",
+                                                          padding: "5px",
+                                                          display: "flex",
+                                                          position: "fixed",
+                                                          alignItems: "center",
+                                                          top: "0",
+                                                          right: "0",
+                                                          zIndex: "1000",
+                                                          backgroundColor: "#68C39F",
+                                                          borderColor: "#68C39F",
+                                                          border: "1px solid #68C39F"
+                      
+                      
+                      
+                                                      }}
+                                                      onClick={handleNotificationSuccess}
+                                                  >
+                                                      <FontAwesomeIcon icon={faCheck} style={{ fontSize: "15px", marginRight: "10px", fontWeight: "500" }} />
+                      
+                                                      <span style={{ color: "#FFFFFF", background: "#68C39F", fontSize: "15px" }} >
+                      
+                                                          {successMsg}
+                                                      </span>
+                                                  </div>
+                      
+                                                  // </div>
+                                              }
+                      
           <div className='widget-header'>
             <div>
               <h2 onClick={() => setCouponSlidOpen(!couponSlidOpen)} style={{ cursor: "pointer", padding: "10px", pointerEvents: 'auto' }}>
@@ -925,7 +973,7 @@ const CreateCoupon = ({
                 <div >
                   <h2
                     onClick={() => {
-                      console.log("clicked me!")
+                     
                       setSectionSlideOpen(prev => !prev);
                     }}
                     style={{ cursor: "pointer", padding: "10px", pointerEvents: "auto" }}>
@@ -1942,7 +1990,7 @@ const CreateCoupon = ({
                 <div >
                   <h2
                     onClick={() => {
-                      console.log("clicked me!")
+                    
                       setSectionSlideOpen(prev => !prev);
                     }}
                     style={{ cursor: "pointer", padding: "10px", pointerEvents: "auto" }}>
@@ -2037,7 +2085,16 @@ const CreateCoupon = ({
                                       {switchSavings &&
                                         <div className='form-group' style={{ marginBottom: "20px", gap: "-15px" }}>
                                           <label>Maximum Coupon Amount (per Redemption)</label>
-                                          <input type='text' placeholder='Coupon Max Value' className='form-control' style={{ width: "100%" }} />
+                                          <input type='text' name="maxCouponAmount" value={value?.maxCouponAmount} placeholder='Coupon Max Value' className='form-control' style={{ width: "100%" }}
+                                           onChange={(e) =>{
+                                            validateNaNNumbers(e);
+                                           
+                                           //validNumbers(e);
+                                            // handleInput(e,"maxCouponAmount");
+                                           }
+                                                            
+                                           }
+                                          />
                                           <label>Note: When "zero" is entered into the "Maximum Coupon Amount" field, the system will disregard the maximum coupon amount condition. Consequently, the coupon will be applied based on the calculated percentage value of the item.</label>
                                         </div>
                                       }
@@ -2104,9 +2161,19 @@ const CreateCoupon = ({
                                       <div className='form-group' style={{ display: "flex", gap: "20px" }}>
                                         <div style={{ width: "100px" }}>
                                           <label>Coupon Limt</label>
-                                          <select>
-                                            <option>0</option>
-                                            <option>1</option>
+                                          <select id="couponLimit" name="couponLimit" value={value?.couponLimit} onChange={(e) => handleInput(e,"couponLimit") }>
+                                            <option value={"0"}>0</option>
+                                            <option value={"1"}>1</option>
+                                            <option value={"2"}>2</option>
+                                            <option value={"2"}>3</option>
+                                            <option value={"2"}>4</option>
+                                            <option value={"2"}>5</option>
+                                            <option value={"2"}>6</option>
+                                            <option value={"2"}>7</option>
+                                            <option value={"2"}>8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+
                                           </select>
                                         </div>
                                         <div className='form-group' style={{ marginBottom: "20px", display: "flex", gap: "5px", width: "200px" }}>
@@ -2954,7 +3021,11 @@ const CreateCoupon = ({
                               //  setCurrentStep(currentStep + 1);
                               handleNextsteps(currentStep);
                               //setSlideval("slide-left")
-                            }} className='btnSearch' >Next</button> : <button className='btnSearch' style={{ marginLeft: "auto" }} onClick={(e) => handleCreateCoupon(e)}>Create Coupon</button>}
+                            }} className='btnSearch' >Next</button> : <button className='btnSearch' style={{ marginLeft: "auto" }}
+                             onClick={(e) =>
+                            //   dispatch(CreateUPCCouponAPI("Veritra RSA",value));
+                               handleCreateCoupon(e)
+                             }>Create Coupon</button>}
 
                           </div>
                         </div>

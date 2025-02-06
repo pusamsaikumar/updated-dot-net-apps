@@ -474,3 +474,14 @@ export const GetClientDataAction =(type,data,message,loading)=> {
     }
   }
   
+  export const CreateUPCCouponAction =(type,data,message,loading)=> {
+    return {
+        type:type,
+        payload:{
+            data,
+            message,
+            loading
+        }
+    }
+  }
+  

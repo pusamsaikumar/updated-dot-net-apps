@@ -175,7 +175,11 @@
 
     createBasketCouponData:0,
     createBasketCouponMessage:"",
-    createBasketCouponLoading:false
+    createBasketCouponLoading:false,
+
+    createUPCCouponData:0,
+    createUPCCouponMessage:"",
+    createUPCCouponLoading:false,
 
 
 

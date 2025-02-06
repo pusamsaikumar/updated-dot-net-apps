@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import * as Constants from "./Constant";
-import { AddAvailableUsersGroupsAction, CreateBasketCouponAction, CreateLastShopperGroupAction, CreateShopperAction, createShopperGroupsAction, CreateUPCListGroupAction, CreateZipcodesListGroupAction, deleteUserAction, DownloadShoppersAction, FindCouponAction, findMemberDetailAction, GetAdvanceShopperAction, GetAllShopperAction, GetAllTimeProductsAction, GetAvailableUsersGroupsAction, GetClientAction, GetClientDataAction, GetClientStoresAction, GetFindShopperAction, GetFindShopperByIdAction, GetGroupAnalysisAction, GetLMRewardDataAction, GetProductCategoriesAction, GetProductDetailsUPCsAction, GetRewardTypesAction, GetRolesAction, GetSearchandCountAction, GetSearchandCreateGroupAction, GetShopperByUPCsAction, GetToProductsAction, GetTopShopperAction, GetUserClipsAndRedemptionsAction, GetUserRewardCouponsAction, GetUsersGroupsAction, GetUserTypesAction, NewsCategoryAction, paginationAction, saveUserPointsAction, UpdateFindShopperAction, UploadShoppersAction, useHistoryAction, userBasketTransactionAction, useRewardsWithMemberNumberAction, userPurchasedCouponsAction, userPurchaseProductAction } from "./Action";
+import { AddAvailableUsersGroupsAction, CreateBasketCouponAction, CreateLastShopperGroupAction, CreateShopperAction, createShopperGroupsAction, CreateUPCCouponAction, CreateUPCListGroupAction, CreateZipcodesListGroupAction, deleteUserAction, DownloadShoppersAction, FindCouponAction, findMemberDetailAction, GetAdvanceShopperAction, GetAllShopperAction, GetAllTimeProductsAction, GetAvailableUsersGroupsAction, GetClientAction, GetClientDataAction, GetClientStoresAction, GetFindShopperAction, GetFindShopperByIdAction, GetGroupAnalysisAction, GetLMRewardDataAction, GetProductCategoriesAction, GetProductDetailsUPCsAction, GetRewardTypesAction, GetRolesAction, GetSearchandCountAction, GetSearchandCreateGroupAction, GetShopperByUPCsAction, GetToProductsAction, GetTopShopperAction, GetUserClipsAndRedemptionsAction, GetUserRewardCouponsAction, GetUsersGroupsAction, GetUserTypesAction, NewsCategoryAction, paginationAction, saveUserPointsAction, UpdateFindShopperAction, UploadShoppersAction, useHistoryAction, userBasketTransactionAction, useRewardsWithMemberNumberAction, userPurchasedCouponsAction, userPurchaseProductAction } from "./Action";
 import { getLMRewardReducer, GetProductDetailsReducer } from "./Reducer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -1458,6 +1458,88 @@ export const CreateBasketCouponAPID = (clientName,value) => async(dispatch) => {
         }
     })
 }
+export const CreateUPCCouponAPI = (clientName,value) => async(dispatch) => {
+    dispatch(CreateUPCCouponAction(Constants.CREATE_UPC_COUPON_START,0,"",true));
+    let body = {
+      
+        "newsID": value?.newsID,
+        "newsCategoryId": value?.newsCategoryI,
+        "title": value?.title,
+        "details": value?.details,
+        "imagePath": value?.imagePath,
+        "validFromDate": DateFormatToYYYYMMddTime(value?.validFromDate),
+        "expiresOn": DateFormatToYYYYMMddTime(value?.expiresOn),
+       
+        "sendNotification": value?.sendNotification,
+        "customerId": value?.customerId,
+        "createUserId": value?.createUserId,
+        "updateUserId": value?.updateUserId,
+        "puiCode": value?.puiCode,
+        "productId": value?.productId,
+        "amount": value?.amount,
+        "discountAmount": value?.discountAmount,
+        "isDiscountPercentage": value?.isDiscountPercentage,
+        "ncrPromotionCode": value?.ncrPromotionCode,
+        "isItStoreSpecific": value?.isItStoreSpecific,
+        "manufacturerCouponId": value?.manufacturerCouponId,
+        "productQuantity": value?.productQuantity,
+        "upSellProductId": value?.upSellProductId,
+        "upSellProductQuantity": value?.upSellProductQuantity,
+        "isFeatured": value?.isFeatured,
+        "deleteFlag": false, // default to false
+        "isItTargetSpecific": value?.isItTargetSpecific,
+        "otherDetails": value?.otherDetails === "" ? value?.title : value?.otherDetails,
+        "isRecurring": value?.isRecurring,
+         "mfgShutOffDate":  DateFormatToYYYYMMddTime(value?.expiresOn),
+        //"mfgShutOffDate": (value?.mfgShutOffDate),
+        "isDealOfTheWeek": value?.isDealOfTheWeek,
+        "departmentId": value?.departmentId,
+        "isMajorDepartment": value?.isMajorDepartment,
+        "storeId": value?.clientStoreIds,
+        "pageNumber": 1,
+        "pdfFileName": "example",
+        "clubId": 0,
+        "userDetailId": 0,
+        "clubMemberId": 0,
+        "id": 0,
+        "storeRouteId": "",
+        "clientStoreId": 0,
+         "recurringStartDate": DateFormatToYYYYMMddTime(value.recurringStartDate),
+         "recurringEndDate": DateFormatToYYYYMMddTime(value.recurringEndDate),
+
+      
+        "recurringTypeId": 1,
+        "clubIds": value?.clubIds,
+        "groupNames": value?.groupNames,
+        "clientStoreIds": value?.clientStoreIds,
+  "upc": value?.UPC,
+  "productName": value?.productName,
+  "product_ID": value?.productId,
+    "couponLimit":value?.couponLimit
+
+    }
+    var config = {
+        method:"post",
+        url:`https://localhost:7140/api/RSASupportAPI/CreateBasketCoupon?clientName=Veritra RSA`,
+        data:body
+    }
+    await axios(config).then(response => {
+        dispatch(CreateUPCCouponAction(Constants.CREATE_UPC_COUPON_SUCCESS,response?.data?.couponStatuss,response?.data?.errorMessage,false));
+    }).catch((err) => {
+        if(err?.response?.status === 400){
+            dispatch(CreateUPCCouponAction(Constants.CREATE_UPC_COUPON_FAILURE,0,"Something went wrong.",false));
+           
+            }else{
+                dispatch(CreateUPCCouponAction(Constants.CREATE_UPC_COUPON_FAILURE,0,"Internel server error",false));
+    
+            }
+    })
+
+}
+// CreateUPCCoupons:
+
+
+
 // https://localhost:7140/api/RSASupportAPI/CreateBasketCoupon?clientName=Veritra RSA
 
 //https://localhost:7140/api/RSASupportAPI/GetNewsCategories?clientName=Veritra RSA
