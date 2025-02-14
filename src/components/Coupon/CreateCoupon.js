@@ -30,6 +30,7 @@ const CreateCoupon = ({
   const [couponSlidOpen, setCouponSlidOpen] = useState(true);
   // select coupons
   const [selectCoupon, setSelectCoupon] = useState(null);
+<<<<<<< HEAD
  
   const [steps, setSteps] = useState(["General", "Departments", "Groups", "Stores", "Store WeeklyAd Groups"]);
 const [couponName, setCouponName] = useState([]);
@@ -57,6 +58,11 @@ const [couponName, setCouponName] = useState([]);
    }
 
 
+=======
+  const handleSelectCoupon = (item) => {
+    setSelectCoupon(selectCoupon !== item ? item : null);
+  }
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
 
   // set coupon section slide open
   const [sectionSlideOpen, setSectionSlideOpen] = useState(true);
@@ -145,12 +151,15 @@ const [couponName, setCouponName] = useState([]);
       if(selectCoupon === "UPC Promotion"){
         setValue((prev) => ({...prev,newsCategoryId:"5"}))
       }
+<<<<<<< HEAD
       if(selectCoupon === "Free Item") {
         setValue(prev => ({...prev,newsCategoryId:8}))
       }
       if(selectCoupon === "Cross Sell"){
         setValue((prev) => ({...prev,newsCategoryId:7}))
       }
+=======
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
   },[selectCoupon])
 
 
@@ -204,11 +213,28 @@ const [couponName, setCouponName] = useState([]);
     setCurrentStep(index);
 
   }
+<<<<<<< HEAD
 
   console.log("udpated steps: ",steps);
   console.log("udpate couponHeader",couponName);
 
 
+=======
+  const [steps, setSteps] = useState(["General", "Departments", "Groups", "Stores", "Store WeeklyAd Groups"]);
+  useEffect(() => {
+    if (selectCoupon === "UPC Promotion") {
+      if (Array.isArray(steps)) {
+        setSteps((prev) => {
+          let update = [...prev];
+          update[1] = "Choose Products";
+          return update;
+        })
+      }
+    } else {
+      setSteps(["General", "Departments", "Groups", "Stores", "Store WeeklyAd Groups"])
+    }
+  }, [selectCoupon])
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
 
 
   const [switchSavings, setSwitchSavings] = useState(false);
@@ -495,7 +521,11 @@ const [couponName, setCouponName] = useState([]);
 
   }, [prviousStep, currentStep])
 
+<<<<<<< HEAD
   console.log("current select coupon: ",selectCoupon)
+=======
+
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
   console.log("value", value);
  
  const  createBasketCouponData  = useSelector(state => state.createBasketCouponData);
@@ -2006,7 +2036,11 @@ const [couponName, setCouponName] = useState([]);
             }
 
             {
+<<<<<<< HEAD
               (selectCoupon == "UPC Promotion" || selectCoupon === "Free Item"  ||selectCoupon === "Cross Sell")&&
+=======
+              selectCoupon == "UPC Promotion" &&
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
               <div style={{background:"#fff"}} >
                 <div >
                   <h2
@@ -2014,6 +2048,7 @@ const [couponName, setCouponName] = useState([]);
                     
                       setSectionSlideOpen(prev => !prev);
                     }}
+<<<<<<< HEAD
                     style={{ cursor: "pointer", padding: "10px", pointerEvents: "auto" ,color:"#5B5B5B"}}>
                     {"Create "} {
                       couponName?.length > 1 ? (<> 
@@ -2027,6 +2062,11 @@ const [couponName, setCouponName] = useState([]);
                       </strong>
                       }
                   
+=======
+                    style={{ cursor: "pointer", padding: "10px", pointerEvents: "auto" }}>
+                    {"Create "} <strong>UPC</strong>
+                    {" Promotion"}
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                   </h2>
                 </div>
                 <div className={`widget-content pading section_slide_content ${sectionSlideOpen ? "section_in" : "section_up"} `} >
@@ -2325,7 +2365,17 @@ const [couponName, setCouponName] = useState([]);
 
                               {
                                 currentStep === 1 &&
+<<<<<<< HEAD
                            
+=======
+                                // <section className={`row ${slideval}`}>
+
+                                //   <div className={`slide ${currentStep === 1 ? "active" : "inactive"}`}>
+                                   
+                                //   </div>
+
+                                // </section>
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                                 <div className={`row ${slideval}`} style={{marginBottom:"10px"}}>
                                 <div className='col-md-4'>
                                   <div>
@@ -2355,7 +2405,11 @@ const [couponName, setCouponName] = useState([]);
                                 </div>
                                 <div className='col-md-8'>
                                   <div className='row'>
+<<<<<<< HEAD
                                     <span>Search and add {selectCoupon === "Cross Sell" ? "Products" : "UPCs"} to coupon</span>
+=======
+                                    <span>Search and add UPCs to coupon</span>
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                                   </div>
 
                                   <div className='note' style={{ paddingTop: "10px", width: "800px" }}>
@@ -2552,6 +2606,7 @@ const [couponName, setCouponName] = useState([]);
                              
 
                               }
+<<<<<<< HEAD
                              
                              {
                                 (currentStep === (selectCoupon === "Cross Sell" ? 2 : null)) &&
@@ -2788,6 +2843,10 @@ const [couponName, setCouponName] = useState([]);
                               {
                                  (currentStep === (selectCoupon === "Cross Sell" ? 3 : 2)) 
                                  &&
+=======
+                              {
+                                currentStep === 2 &&
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                                 <section className={`${slideval
                                   }`} style={{ float: "left", width: "1132px", height: "250px" }}>
 
@@ -3017,7 +3076,11 @@ const [couponName, setCouponName] = useState([]);
                                 </section>
                               }
                               {
+<<<<<<< HEAD
                                (currentStep === (selectCoupon === "Cross Sell" ? 4 : 3))  &&
+=======
+                                currentStep === 3 &&
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                                 <section className={`${slideval}`} style={{ float: "left", width: "1132px", height: "300px" }}>
 
                                   <div className='row'>
@@ -3227,7 +3290,11 @@ const [couponName, setCouponName] = useState([]);
                                 </section>
                               }
                               {
+<<<<<<< HEAD
                                (currentStep === (selectCoupon === "Cross Sell" ? 5 : 4))  &&
+=======
+                                currentStep === 4 &&
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                                 <section className={`${slideval}`} style={{ float: "left", width: "1132px", height: "400px" }}>
 
                                   <div className='row'>
@@ -3275,7 +3342,11 @@ const [couponName, setCouponName] = useState([]);
                               }
                               }>Back</button>
                             )}
+<<<<<<< HEAD
                             {(currentStep !== (selectCoupon === "Cross Sell" ? 5 : 4)) ? <button style={{ marginLeft: "auto" }} onClick={() => {
+=======
+                            {currentStep !== 4 ? <button style={{ marginLeft: "auto" }} onClick={() => {
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
                               //   setPreviousStep(currentStep);
                               //  setCurrentStep(currentStep + 1);
                               handleNextsteps(currentStep);
@@ -3299,8 +3370,27 @@ const [couponName, setCouponName] = useState([]);
                 </div>
               </div>
             }
+<<<<<<< HEAD
            
            
+=======
+            {
+              selectCoupon == "Free Item" &&
+              <div className='widget-header'>
+                <div className='row'>
+                  Free Item
+                </div>
+              </div>
+            }
+            {
+              selectCoupon == "Cross Sell" &&
+              <div className='widget-header'>
+                <div className='row'>
+                  Cross Sell
+                </div>
+              </div>
+            }
+>>>>>>> b5a13253cac9e70aed709e2e1487adb7ac4c73c1
           </div>
         </div>
 
